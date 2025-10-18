@@ -243,14 +243,17 @@ function rbec_deactivate() {
 register_deactivation_hook(__FILE__, 'rbec_deactivate');
 
 /**
- * Add AJAX handlers
+ * Add AJAX handlers and enqueue scripts using plugin instance
  */
-add_action('wp_ajax_rbec_test_user', array('RBEC_Main', 'ajax_test_user'));
+add_action('wp_ajax_rbec_test_user', function() {
+    $plugin = RBEC_Main::get_instance();
+    $plugin->ajax_test_user();
+});
 
-/**
- * Enqueue scripts and styles
- */
-add_action('admin_enqueue_scripts', array('RBEC_Main', 'enqueue_admin_scripts'));
+add_action('admin_enqueue_scripts', function($hook) {
+    $plugin = RBEC_Main::get_instance();
+    $plugin->enqueue_admin_scripts($hook);
+});
 
 /**
  * Redirect to settings page after plugin activation
