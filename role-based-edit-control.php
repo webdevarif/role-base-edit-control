@@ -6,7 +6,7 @@
  * Version: 1.0.0
  * Requires at least: 5.0
  * Requires PHP: 7.2
- * Tested up to: 6.5
+ * Tested up to: 6.8
  * Author: Arif Hossin
  * Author URI: https://digitalfarmers.be
  * License: GPL v2 or later
@@ -30,17 +30,6 @@ define('RBEC_VERSION_LEGACY', RBEC_VERSION);
 define('RBEC_PLUGIN_DIR_LEGACY', RBEC_PLUGIN_DIR);
 define('RBEC_PLUGIN_URL_LEGACY', RBEC_PLUGIN_URL);
 
-/**
- * Load plugin text domain for translations
- */
-function rbec_load_textdomain() {
-    load_plugin_textdomain(
-        'role-based-edit-control',
-        false,
-        dirname(plugin_basename(__FILE__)) . '/languages'
-    );
-}
-add_action('plugins_loaded', 'rbec_load_textdomain');
 
 /**
  * Main plugin class

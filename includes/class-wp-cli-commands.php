@@ -261,13 +261,14 @@ class RBEC_WP_CLI_Commands {
         
         // Parse the configuration
         if ($format === 'php') {
-            // For PHP files, we need to evaluate the content
-            // This is a simplified approach - in production, you might want more validation
-            $temp_config = null;
-            eval('?>' . $content);
-            if (!isset($temp_config) && isset($uipress_role_button_config)) {
-                $temp_config = $uipress_role_button_config;
+            // For PHP files, we'll parse the content safely
+            // Extract array content from PHP file
+            if (preg_match('/\$[a-zA-Z_][a-zA-Z0-9_]*\s*=\s*array\s*\((.*)\)\s*;/s', $content, $matches)) {
+                // This is a basic parser - for complex configs, consider using a proper parser
+                WP_CLI::error('PHP configuration import is not supported for security reasons. Please use JSON format instead.');
+                return;
             }
+            $temp_config = null;
         } else {
             $temp_config = json_decode($content, true);
             if (json_last_error() !== JSON_ERROR_NONE) {
