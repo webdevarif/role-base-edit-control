@@ -2,7 +2,7 @@
 Contributors: arifhossin
 Tags: permissions, roles, user-roles, access-control, elementor, admin, security, capabilities
 Requires at least: 5.0
-Tested up to: 6.4
+Tested up to: 6.5
 Requires PHP: 7.2
 Stable tag: 1.0.0
 License: GPLv2 or later
@@ -143,6 +143,17 @@ The plugin works on multisite installations. Settings are managed per-site.
 3. **Permission Matrix** - Visual overview showing all role permissions at a glance
 4. **Bulk Operations** - Select multiple users and apply bulk actions efficiently
 5. **Quick Actions** - Export/import settings and test current user permissions
+
+? Order the screenshots in the order you'd like them to appear in the plugin listing.
+
+== Screenshots ==
+
+1. **Main Settings Page** - Clean, tabbed interface for managing role permissions and user overrides
+2. **Role Permissions Tab** - Set default permissions for user roles with visual toggles
+3. **User Overrides Tab** - Target individual users with custom permission settings
+4. **Quick Actions Tab** - Export/import settings, reset permissions, and test current user
+5. **Permission Matrix** - Visual overview showing all role and user permissions at a glance
+6. **WP-CLI Commands** - Command-line management with comprehensive options
 
 == Changelog ==
 

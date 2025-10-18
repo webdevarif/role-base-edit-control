@@ -6,7 +6,7 @@
  * Version: 1.0.0
  * Requires at least: 5.0
  * Requires PHP: 7.2
- * Tested up to: 6.4
+ * Tested up to: 6.5
  * Author: Arif Hossin
  * Author URI: https://digitalfarmers.be
  * License: GPL v2 or later
