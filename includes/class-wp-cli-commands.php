@@ -33,18 +33,18 @@ class RBEC_WP_CLI_Commands {
      * @when after_wp_load
      */
     public function list_roles($args, $assoc_args) {
-        global $uipress_role_button_config;
+        global $rbec_role_button_config;
         
         $format = isset($assoc_args['format']) ? $assoc_args['format'] : 'table';
         
         if ($format === 'json') {
-            WP_CLI::line(json_encode($uipress_role_button_config, JSON_PRETTY_PRINT));
+            WP_CLI::line(json_encode($rbec_role_button_config, JSON_PRETTY_PRINT));
             return;
         }
         
         // Prepare table data
         $table_data = array();
-        foreach ($uipress_role_button_config as $role => $config) {
+        foreach ($rbec_role_button_config as $role => $config) {
             $table_data[] = array(
                 'Role' => $role,
                 'Edit Button' => $config['show_edit'] ? 'Yes' : 'No',
@@ -78,7 +78,7 @@ class RBEC_WP_CLI_Commands {
      * @when after_wp_load
      */
     public function update_role($args, $assoc_args) {
-        global $uipress_role_button_config;
+        global $rbec_role_button_config;
         
         if (empty($args[0])) {
             WP_CLI::error('Role name is required');
@@ -86,7 +86,7 @@ class RBEC_WP_CLI_Commands {
         
         $role = $args[0];
         
-        if (!isset($uipress_role_button_config[$role])) {
+        if (!isset($rbec_role_button_config[$role])) {
             WP_CLI::error("Role '{$role}' not found in configuration");
         }
         
@@ -97,7 +97,7 @@ class RBEC_WP_CLI_Commands {
             if ($edit_value === null) {
                 WP_CLI::error('Invalid edit value. Use true or false.');
             }
-            $uipress_role_button_config[$role]['show_edit'] = $edit_value;
+            $rbec_role_button_config[$role]['show_edit'] = $edit_value;
             $updated = true;
         }
         
@@ -106,7 +106,7 @@ class RBEC_WP_CLI_Commands {
             if ($elementor_value === null) {
                 WP_CLI::error('Invalid elementor value. Use true or false.');
             }
-            $uipress_role_button_config[$role]['show_elementor'] = $elementor_value;
+            $rbec_role_button_config[$role]['show_elementor'] = $elementor_value;
             $updated = true;
         }
         
@@ -115,12 +115,12 @@ class RBEC_WP_CLI_Commands {
         }
         
         // Save the updated configuration
-        $this->save_configuration($uipress_role_button_config);
+        $this->save_configuration($rbec_role_button_config);
         
         WP_CLI::success("Role '{$role}' updated successfully");
         
         // Show updated role info
-        $config = $uipress_role_button_config[$role];
+        $config = $rbec_role_button_config[$role];
         WP_CLI::line("Edit Button: " . ($config['show_edit'] ? 'Yes' : 'No'));
         WP_CLI::line("Elementor Button: " . ($config['show_elementor'] ? 'Yes' : 'No'));
     }
@@ -146,8 +146,8 @@ class RBEC_WP_CLI_Commands {
         // Switch to the user context
         wp_set_current_user($user_id);
         
-        $can_edit = uipress_user_can_see_edit_button();
-        $can_elementor = uipress_user_can_see_elementor_button();
+        $can_edit = rbec_user_can_see_edit_button();
+        $can_elementor = rbec_user_can_see_elementor_button();
         
         WP_CLI::line("User: {$user->display_name} (ID: {$user_id})");
         WP_CLI::line("Roles: " . implode(', ', $user->roles));
@@ -157,7 +157,7 @@ class RBEC_WP_CLI_Commands {
         // Show role details
         WP_CLI::line("\nRole Details:");
         foreach ($user->roles as $role) {
-            $config = uipress_get_role_button_config($role);
+            $config = rbec_get_role_button_config($role);
             WP_CLI::line("  {$role}: Edit=" . ($config['show_edit'] ? 'Yes' : 'No') . 
                         ", Elementor=" . ($config['show_elementor'] ? 'Yes' : 'No'));
         }
@@ -182,7 +182,7 @@ class RBEC_WP_CLI_Commands {
      * @when after_wp_load
      */
     public function export($args, $assoc_args) {
-        global $uipress_role_button_config;
+        global $rbec_role_button_config;
         
         if (empty($args[0])) {
             WP_CLI::error('Export file path is required');
@@ -197,9 +197,9 @@ class RBEC_WP_CLI_Commands {
             $content .= " * Exported UiPress Role Buttons Configuration\n";
             $content .= " * Generated: " . date('Y-m-d H:i:s') . "\n";
             $content .= " */\n\n";
-            $content .= "\$uipress_role_button_config = " . var_export($uipress_role_button_config, true) . ";\n";
+            $content .= "\$rbec_role_button_config = " . var_export($rbec_role_button_config, true) . ";\n";
         } else {
-            $content = json_encode($uipress_role_button_config, JSON_PRETTY_PRINT);
+            $content = json_encode($rbec_role_button_config, JSON_PRETTY_PRINT);
         }
         
         $result = file_put_contents($file_path, $content);
@@ -234,7 +234,7 @@ class RBEC_WP_CLI_Commands {
      * @when after_wp_load
      */
     public function import($args, $assoc_args) {
-        global $uipress_role_button_config;
+        global $rbec_role_button_config;
         
         if (empty($args[0])) {
             WP_CLI::error('Import file path is required');
@@ -281,7 +281,7 @@ class RBEC_WP_CLI_Commands {
         }
         
         // Validate the configuration
-        $errors = uipress_validate_role_config($temp_config);
+        $errors = rbec_validate_role_config($temp_config);
         if (!empty($errors)) {
             WP_CLI::error('Configuration validation failed: ' . implode(', ', $errors));
         }
@@ -361,7 +361,7 @@ class RBEC_WP_CLI_Commands {
      * @when after_wp_load
      */
     public function bulk_update($args, $assoc_args) {
-        global $uipress_role_button_config;
+        global $rbec_role_button_config;
         
         if (isset($assoc_args['file'])) {
             $this->bulk_update_from_file($assoc_args['file']);
@@ -399,17 +399,17 @@ class RBEC_WP_CLI_Commands {
         $updated_roles = array();
         
         foreach ($roles as $role) {
-            if (!isset($uipress_role_button_config[$role])) {
+            if (!isset($rbec_role_button_config[$role])) {
                 WP_CLI::warning("Role '{$role}' not found, skipping");
                 continue;
             }
             
             if ($edit_value !== null) {
-                $uipress_role_button_config[$role]['show_edit'] = $edit_value;
+                $rbec_role_button_config[$role]['show_edit'] = $edit_value;
             }
             
             if ($elementor_value !== null) {
-                $uipress_role_button_config[$role]['show_elementor'] = $elementor_value;
+                $rbec_role_button_config[$role]['show_elementor'] = $elementor_value;
             }
             
             $updated_roles[] = $role;
@@ -420,7 +420,7 @@ class RBEC_WP_CLI_Commands {
         }
         
         // Save the updated configuration
-        $this->save_configuration($uipress_role_button_config);
+        $this->save_configuration($rbec_role_button_config);
         
         WP_CLI::success('Updated roles: ' . implode(', ', $updated_roles));
     }
@@ -429,7 +429,7 @@ class RBEC_WP_CLI_Commands {
      * Bulk update from JSON file
      */
     private function bulk_update_from_file($file_path) {
-        global $uipress_role_button_config;
+        global $rbec_role_button_config;
         
         if (!file_exists($file_path)) {
             WP_CLI::error("File not found: {$file_path}");
@@ -449,17 +449,17 @@ class RBEC_WP_CLI_Commands {
         $updated_roles = array();
         
         foreach ($updates as $role => $permissions) {
-            if (!isset($uipress_role_button_config[$role])) {
+            if (!isset($rbec_role_button_config[$role])) {
                 WP_CLI::warning("Role '{$role}' not found, skipping");
                 continue;
             }
             
             if (isset($permissions['show_edit'])) {
-                $uipress_role_button_config[$role]['show_edit'] = (bool) $permissions['show_edit'];
+                $rbec_role_button_config[$role]['show_edit'] = (bool) $permissions['show_edit'];
             }
             
             if (isset($permissions['show_elementor'])) {
-                $uipress_role_button_config[$role]['show_elementor'] = (bool) $permissions['show_elementor'];
+                $rbec_role_button_config[$role]['show_elementor'] = (bool) $permissions['show_elementor'];
             }
             
             $updated_roles[] = $role;
@@ -470,7 +470,7 @@ class RBEC_WP_CLI_Commands {
         }
         
         // Save the updated configuration
-        $this->save_configuration($uipress_role_button_config);
+        $this->save_configuration($rbec_role_button_config);
         
         WP_CLI::success('Updated roles: ' . implode(', ', $updated_roles));
     }
@@ -481,8 +481,8 @@ class RBEC_WP_CLI_Commands {
     private function save_configuration($config) {
         // In a real implementation, you would save this to the database
         // For now, we'll just update the global variable
-        global $uipress_role_button_config;
-        $uipress_role_button_config = $config;
+        global $rbec_role_button_config;
+        $rbec_role_button_config = $config;
         
         // You could also save to an option or custom table
         // update_option('uipress_role_button_config', $config);

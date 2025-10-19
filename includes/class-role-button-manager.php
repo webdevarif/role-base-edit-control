@@ -105,12 +105,12 @@ class RBEC_Button_Manager {
             }
 
             // Remove edit action if user can't see it
-            if (!uipress_user_can_see_edit_button()) {
+            if (!rbec_user_can_see_edit_button()) {
                 unset($actions['edit']);
             }
 
             // Remove Elementor edit action if user can't see it
-            if (!uipress_user_can_see_elementor_button()) {
+            if (!rbec_user_can_see_elementor_button()) {
                 $this->remove_elementor_actions($actions);
             }
 
@@ -172,7 +172,7 @@ class RBEC_Button_Manager {
             }
 
             // Remove edit actions if user can't see them
-            if (!uipress_user_can_see_edit_button()) {
+            if (!rbec_user_can_see_edit_button()) {
                 unset($actions['edit']);
                 unset($actions['trash']);
             }
@@ -192,12 +192,12 @@ class RBEC_Button_Manager {
      */
     public function filter_admin_bar_menu($wp_admin_bar) {
         // Remove edit post link from admin bar
-        if (!uipress_user_can_see_edit_button()) {
+        if (!rbec_user_can_see_edit_button()) {
             $wp_admin_bar->remove_node('edit');
         }
 
         // Remove Elementor edit link from admin bar
-        if (!uipress_user_can_see_elementor_button()) {
+        if (!rbec_user_can_see_elementor_button()) {
             $wp_admin_bar->remove_node('elementor_edit_page');
         }
     }
@@ -212,7 +212,7 @@ class RBEC_Button_Manager {
      */
     public function filter_edit_post_link($link, $post_id, $context) {
         // Return false to prevent edit links from being generated
-        if (!uipress_user_can_see_edit_button()) {
+        if (!rbec_user_can_see_edit_button()) {
             return false;
         }
 
@@ -227,7 +227,7 @@ class RBEC_Button_Manager {
      * @return array Filtered actions
      */
     public function remove_elementor_row_actions($actions, $post) {
-        if (!uipress_user_can_see_elementor_button()) {
+        if (!rbec_user_can_see_elementor_button()) {
             $this->remove_elementor_actions($actions);
         }
 
@@ -239,7 +239,7 @@ class RBEC_Button_Manager {
      */
     public function filter_elementor_admin_menu() {
         // Hide Elementor admin menu items for non-admins
-        if (!uipress_user_can_see_elementor_button()) {
+        if (!rbec_user_can_see_elementor_button()) {
             remove_menu_page('elementor');
             remove_submenu_page('elementor', 'elementor-tools');
             remove_submenu_page('elementor', 'elementor-system-info');
@@ -250,7 +250,7 @@ class RBEC_Button_Manager {
      * Check Elementor editor access
      */
     public function check_elementor_editor_access() {
-        if (!uipress_user_can_see_elementor_button()) {
+        if (!rbec_user_can_see_elementor_button()) {
             wp_die(
                 __('Sorry, you are not allowed to edit with Elementor.', 'uipress-role-buttons'),
                 __('Access Denied', 'uipress-role-buttons'),
@@ -264,7 +264,7 @@ class RBEC_Button_Manager {
      */
     public function add_admin_footer_scripts() {
         // Only add scripts if user has restricted access
-        if (uipress_user_can_see_edit_button() && uipress_user_can_see_elementor_button()) {
+        if (rbec_user_can_see_edit_button() && rbec_user_can_see_elementor_button()) {
             return;
         }
 
@@ -273,23 +273,23 @@ class RBEC_Button_Manager {
         jQuery(document).ready(function($) {
             // Additional button hiding for elements not caught by PHP hooks
             
-            <?php if (!uipress_user_can_see_edit_button()): ?>
+            <?php if (!rbec_user_can_see_edit_button()): ?>
             // Hide classic edit buttons
             $('.edit-link, .edit a, .post-edit-link, .page-edit-link').hide();
             <?php endif; ?>
             
-            <?php if (!uipress_user_can_see_elementor_button()): ?>
+            <?php if (!rbec_user_can_see_elementor_button()): ?>
             // Hide Elementor buttons
             $('.elementor-edit-link, .elementor-edit-page, .elementor-preview-link').hide();
             $('a[href*="elementor"]').hide();
             <?php endif; ?>
             
             // Hide buttons in UiPress admin panels
-            <?php if (!uipress_user_can_see_edit_button()): ?>
+            <?php if (!rbec_user_can_see_edit_button()): ?>
             $('.uip-admin-page a[href*="post.php"], .uip-admin-page a[href*="post-new.php"]').hide();
             <?php endif; ?>
             
-            <?php if (!uipress_user_can_see_elementor_button()): ?>
+            <?php if (!rbec_user_can_see_elementor_button()): ?>
             $('.uip-admin-page a[href*="elementor"]').hide();
             <?php endif; ?>
         });
@@ -329,8 +329,8 @@ class RBEC_Button_Manager {
         }
 
         $user_role = $this->get_current_user_role();
-        $can_edit = uipress_user_can_see_edit_button();
-        $can_elementor = uipress_user_can_see_elementor_button();
+        $can_edit = rbec_user_can_see_edit_button();
+        $can_elementor = rbec_user_can_see_elementor_button();
         
         error_log(sprintf(
             'UiPress Role Buttons - %s: Role=%s, Edit=%s, Elementor=%s',

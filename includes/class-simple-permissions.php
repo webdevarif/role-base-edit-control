@@ -19,12 +19,12 @@ class RBEC_Permissions {
     /**
      * Option name for role permissions
      */
-    const ROLE_PERMISSIONS_OPTION = 'uipress_role_permissions';
+    const ROLE_PERMISSIONS_OPTION = 'rbec_role_permissions';
 
     /**
      * Option name for user overrides
      */
-    const USER_OVERRIDES_OPTION = 'uipress_user_overrides';
+    const USER_OVERRIDES_OPTION = 'rbec_user_overrides';
 
     /**
      * Default role permissions
@@ -296,17 +296,17 @@ class RBEC_Permissions {
      */
     private static function migrate_from_old_system() {
         // Check if migration is needed
-        if (get_option('uipress_permissions_migrated')) {
+        if (get_option('rbec_permissions_migrated')) {
             return;
         }
         
         // Migrate role permissions from old global config
-        global $uipress_role_button_config;
+        global $rbec_role_button_config;
         
-        if (isset($uipress_role_button_config) && is_array($uipress_role_button_config)) {
+        if (isset($rbec_role_button_config) && is_array($rbec_role_button_config)) {
             $migrated_permissions = array();
             
-            foreach ($uipress_role_button_config as $role => $config) {
+            foreach ($rbec_role_button_config as $role => $config) {
                 $migrated_permissions[$role] = array(
                     'edit' => $config['show_edit'] ?? false,
                     'elementor' => $config['show_elementor'] ?? false
@@ -317,7 +317,7 @@ class RBEC_Permissions {
         }
         
         // Mark migration as complete
-        update_option('uipress_permissions_migrated', true);
+        update_option('rbec_permissions_migrated', true);
     }
 
     /**
