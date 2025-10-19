@@ -20,15 +20,33 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-// Define plugin constants
-define('RBEC_VERSION', '1.0.0');
-define('RBEC_PLUGIN_DIR', plugin_dir_path(__FILE__));
-define('RBEC_PLUGIN_URL', plugin_dir_url(__FILE__));
+// Prevent multiple plugin loading
+if (defined('RBEC_LOADED')) {
+    return;
+}
+define('RBEC_LOADED', true);
+
+// Define plugin constants (only if not already defined)
+if (!defined('RBEC_VERSION')) {
+    define('RBEC_VERSION', '1.0.0');
+}
+if (!defined('RBEC_PLUGIN_DIR')) {
+    define('RBEC_PLUGIN_DIR', plugin_dir_path(__FILE__));
+}
+if (!defined('RBEC_PLUGIN_URL')) {
+    define('RBEC_PLUGIN_URL', plugin_dir_url(__FILE__));
+}
 
 // Keep old constants for backward compatibility
-define('RBEC_VERSION_LEGACY', RBEC_VERSION);
-define('RBEC_PLUGIN_DIR_LEGACY', RBEC_PLUGIN_DIR);
-define('RBEC_PLUGIN_URL_LEGACY', RBEC_PLUGIN_URL);
+if (!defined('RBEC_VERSION_LEGACY')) {
+    define('RBEC_VERSION_LEGACY', RBEC_VERSION);
+}
+if (!defined('RBEC_PLUGIN_DIR_LEGACY')) {
+    define('RBEC_PLUGIN_DIR_LEGACY', RBEC_PLUGIN_DIR);
+}
+if (!defined('RBEC_PLUGIN_URL_LEGACY')) {
+    define('RBEC_PLUGIN_URL_LEGACY', RBEC_PLUGIN_URL);
+}
 
 
 /**
@@ -367,5 +385,11 @@ add_action('admin_bar_menu', 'rbec_add_admin_bar_link', 100);
  * Debug function - only works if WP_DEBUG is enabled
  */
 if (defined('WP_DEBUG') && WP_DEBUG) {
+    function rbec_debug_role_config() {
+        if (current_user_can('manage_options')) {
+            error_log('RBEC Debug: Plugin loaded successfully');
+            error_log('RBEC Debug: Current user roles: ' . implode(', ', wp_get_current_user()->roles));
+        }
+    }
     add_action('admin_init', 'rbec_debug_role_config');
 }
