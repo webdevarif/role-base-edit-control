@@ -24,7 +24,7 @@ Control who can see edit buttons in WordPress admin. Simple, visual interface to
 * **Export/Import** - Backup and restore your permission settings
 * **Keyboard Shortcuts** - Power user features for faster workflow (Ctrl+S to save, Ctrl+F to search)
 * **Permission Matrix** - Visual overview of all permissions at a glance
-* **UiPress Compatible** - Works seamlessly with UiPress admin theme
+* **Admin Theme Compatible** - Works seamlessly with admin themes
 
 ### 💡 Perfect For
 
@@ -104,9 +104,9 @@ Absolutely! You can add individual user overrides that take priority over role-b
 
 No. The plugin only controls button visibility - it doesn't delete or modify any content. You can always reset to defaults with one click.
 
-= Is it compatible with UiPress? =
+= Is it compatible with admin themes? =
 
-Yes, the plugin was designed to work seamlessly with UiPress admin theme.
+Yes, the plugin was designed to work seamlessly with various admin themes.
 
 = Can I bulk-update multiple users at once? =
 
@@ -170,7 +170,7 @@ The plugin works on multisite installations. Settings are managed per-site.
 * Automatic migration from legacy configurations
 * WP-CLI support for command-line management
 * Full sanitization and security measures
-* UiPress compatibility
+* Admin theme compatibility
 
 == Upgrade Notice ==
 

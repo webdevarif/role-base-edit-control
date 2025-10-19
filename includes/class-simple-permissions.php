@@ -1,6 +1,6 @@
 <?php
 /**
- * Simple Permission System for UiPress Role-Based Button Visibility
+ * Simple Permission System for Role-Based Edit Control
  * 
  * This class provides a simplified database-driven permission system
  * that allows targeting both individual users and roles.
@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * UiPress Simple Permissions Class
+ * RBEC Simple Permissions Class
  */
 class RBEC_Permissions {
 
@@ -344,10 +344,3 @@ class RBEC_Permissions {
 add_action('init', array('RBEC_Permissions', 'init'));
 
 // Backward compatibility functions
-function uipress_user_can_see_edit_button() {
-    return RBEC_Permissions::user_can_see_button(get_current_user_id(), 'edit');
-}
-
-function uipress_user_can_see_elementor_button() {
-    return RBEC_Permissions::user_can_see_button(get_current_user_id(), 'elementor');
-}

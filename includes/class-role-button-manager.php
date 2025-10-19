@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * UiPress Role Button Manager Class
+ * RBEC Role Button Manager Class
  */
 class RBEC_Button_Manager {
 
@@ -118,7 +118,7 @@ class RBEC_Button_Manager {
             
         } catch (Exception $e) {
             // Log error and fail gracefully
-            error_log('UiPress Role Buttons Error in filter_post_row_actions: ' . $e->getMessage());
+            error_log('RBEC Error in filter_post_row_actions: ' . $e->getMessage());
             return $actions;
         }
     }
@@ -135,7 +135,7 @@ class RBEC_Button_Manager {
             // Same logic as post row actions with error handling
             return $this->filter_post_row_actions($actions, $post);
         } catch (Exception $e) {
-            error_log('UiPress Role Buttons Error in filter_page_row_actions: ' . $e->getMessage());
+            error_log('RBEC Error in filter_page_row_actions: ' . $e->getMessage());
             return $actions;
         }
     }
@@ -180,7 +180,7 @@ class RBEC_Button_Manager {
             return $actions;
             
         } catch (Exception $e) {
-            error_log('UiPress Role Buttons Error in filter_bulk_actions: ' . $e->getMessage());
+            error_log('RBEC Error in filter_bulk_actions: ' . $e->getMessage());
             return $actions;
         }
     }
@@ -252,8 +252,8 @@ class RBEC_Button_Manager {
     public function check_elementor_editor_access() {
         if (!rbec_user_can_see_elementor_button()) {
             wp_die(
-                __('Sorry, you are not allowed to edit with Elementor.', 'uipress-role-buttons'),
-                __('Access Denied', 'uipress-role-buttons'),
+                __('Sorry, you are not allowed to edit with Elementor.', 'role-based-edit-control'),
+                __('Access Denied', 'role-based-edit-control'),
                 array('response' => 403)
             );
         }
@@ -284,7 +284,7 @@ class RBEC_Button_Manager {
             $('a[href*="elementor"]').hide();
             <?php endif; ?>
             
-            // Hide buttons in UiPress admin panels
+            // Hide buttons in admin panels
             <?php if (!rbec_user_can_see_edit_button()): ?>
             $('.uip-admin-page a[href*="post.php"], .uip-admin-page a[href*="post-new.php"]').hide();
             <?php endif; ?>
@@ -333,7 +333,7 @@ class RBEC_Button_Manager {
         $can_elementor = rbec_user_can_see_elementor_button();
         
         error_log(sprintf(
-            'UiPress Role Buttons - %s: Role=%s, Edit=%s, Elementor=%s',
+            'RBEC - %s: Role=%s, Edit=%s, Elementor=%s',
             $context,
             $user_role,
             $can_edit ? 'Yes' : 'No',

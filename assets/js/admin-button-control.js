@@ -7,7 +7,7 @@
  * 
  * Features:
  * - Role-based button visibility
- * - UiPress dashboard compatibility
+ * - Admin dashboard compatibility
  * - Elementor integration
  * - Non-destructive DOM manipulation
  */
@@ -66,7 +66,7 @@
                 return;
             }
 
-            this.log('Initializing UiPress Role Button Controller for role: ' + this.config.userRole);
+            this.log('Initializing RBEC Role Button Controller for role: ' + this.config.userRole);
             
             // Run button hiding
             this.hideButtons();
@@ -74,8 +74,8 @@
             // Set up observers for dynamic content
             this.setupObservers();
             
-            // Handle UiPress dashboard panels
-            this.handleUiPressPanels();
+            // Handle Admin dashboard panels
+            this.handleAdminPanels();
         },
 
         /**
@@ -125,34 +125,34 @@
         },
 
         /**
-         * Handle UiPress dashboard panels
+         * Handle Admin dashboard panels
          */
-        handleUiPressPanels: function() {
+        handleAdminPanels: function() {
             var self = this;
             
-            // Wait for UiPress panels to load
+            // Wait for Admin panels to load
             setTimeout(function() {
                 self.config.selectors.rbecPanels.forEach(function(panelSelector) {
                     $(panelSelector).each(function() {
                         var $panel = $(this);
-                        self.processUiPressPanel($panel);
+                        self.processAdminPanel($panel);
                     });
                 });
             }, 1000);
         },
 
         /**
-         * Process a UiPress panel for button hiding
+         * Process a Admin panel for button hiding
          * 
          * @param {jQuery} $panel Panel element
          */
-        processUiPressPanel: function($panel) {
-            // Hide edit buttons in UiPress panels
+        processAdminPanel: function($panel) {
+            // Hide edit buttons in Admin panels
             if (!this.userCanSeeEditButton()) {
                 $panel.find('a[href*="post.php"], a[href*="post-new.php"]').addClass('rbec-role-button-hidden');
             }
 
-            // Hide Elementor buttons in UiPress panels
+            // Hide Elementor buttons in Admin panels
             if (!this.userCanSeeElementorButton()) {
                 $panel.find('a[href*="elementor"]').addClass('rbec-role-button-hidden');
             }
@@ -192,7 +192,7 @@
                 if (settings.url && settings.url.indexOf('admin-ajax.php') !== -1) {
                     setTimeout(function() {
                         self.hideButtons();
-                        self.handleUiPressPanels();
+                        self.handleAdminPanels();
                     }, 100);
                 }
             });
@@ -254,7 +254,7 @@
          */
         log: function(message) {
             if (this.config.debug) {
-                console.log('[UiPress Role Buttons] ' + message);
+                console.log('[Admin Role Buttons] ' + message);
             }
         }
     };
@@ -272,15 +272,15 @@
     $(window).on('load', function() {
         setTimeout(function() {
             RBECRoleButtonController.hideButtons();
-            RBECRoleButtonController.handleUiPressPanels();
+            RBECRoleButtonController.handleAdminPanels();
         }, 500);
     });
 
     /**
-     * Handle UiPress dashboard events
+     * Handle Admin dashboard events
      */
     $(document).on('uipress:panel:loaded', function() {
-        RBECRoleButtonController.handleUiPressPanels();
+        RBECRoleButtonController.handleAdminPanels();
     });
 
     /**

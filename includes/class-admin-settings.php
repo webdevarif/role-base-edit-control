@@ -1,6 +1,6 @@
 <?php
 /**
- * Simple Admin Settings for UiPress Role-Based Button Visibility
+ * Simple Admin Settings for Role-Based Edit Control
  * 
  * This class provides a clean, tabbed interface for managing
  * both role permissions and individual user overrides.
@@ -58,7 +58,7 @@ class RBEC_Admin_Settings {
         <div class="wrap">
             <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
             
-            <div class="uipress-simple-admin">
+            <div class="rbec-admin">
                 <!-- Tabs -->
                 <nav class="nav-tab-wrapper">
                     <a href="#tab-role-permissions" class="nav-tab nav-tab-active" data-tab="role-permissions">
@@ -379,9 +379,9 @@ class RBEC_Admin_Settings {
 
         // Add inline CSS
         wp_add_inline_style('wp-admin', '
-            .uipress-simple-admin .tab-content { margin-top: 20px; }
-            .uipress-simple-admin .tab-pane { display: none; }
-            .uipress-simple-admin .tab-pane.active { display: block; }
+            .rbec-admin .tab-content { margin-top: 20px; }
+            .rbec-admin .tab-pane { display: none; }
+            .rbec-admin .tab-pane.active { display: block; }
             .user-search-container { position: relative; }
             .user-search-results { 
                 position: absolute;
@@ -537,7 +537,7 @@ class RBEC_Admin_Settings {
         $json = json_encode($permissions, JSON_PRETTY_PRINT);
         
         header('Content-Type: application/json');
-        header('Content-Disposition: attachment; filename="uipress-permissions-' . date('Y-m-d') . '.json"');
+        header('Content-Disposition: attachment; filename="rbec-permissions-' . date('Y-m-d') . '.json"');
         echo $json;
         exit;
     }

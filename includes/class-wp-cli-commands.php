@@ -1,6 +1,6 @@
 <?php
 /**
- * WP-CLI Commands for UiPress Role-Based Button Visibility Plugin
+ * WP-CLI Commands for Role-Based Edit Control Plugin
  * 
  * This class provides command-line management capabilities for the plugin,
  * allowing administrators to manage role permissions from the command line.
@@ -17,7 +17,7 @@ if (!class_exists('WP_CLI')) {
 }
 
 /**
- * UiPress Role Buttons WP-CLI Commands Class
+ * RBEC WP-CLI Commands Class
  */
 class RBEC_WP_CLI_Commands {
 
@@ -26,9 +26,9 @@ class RBEC_WP_CLI_Commands {
      * 
      * ## EXAMPLES
      * 
-     *     wp uipress-role-buttons list-roles
-     *     wp uipress-role-buttons list-roles --format=table
-     *     wp uipress-role-buttons list-roles --format=json
+     *     wp rbec list-roles
+     *     wp rbec list-roles --format=table
+     *     wp rbec list-roles --format=json
      * 
      * @when after_wp_load
      */
@@ -72,8 +72,8 @@ class RBEC_WP_CLI_Commands {
      * 
      * ## EXAMPLES
      * 
-     *     wp uipress-role-buttons update-role editor --edit=true --elementor=false
-     *     wp uipress-role-buttons update-role shop_manager --edit=false --elementor=false
+     *     wp rbec update-role editor --edit=true --elementor=false
+     *     wp rbec update-role shop_manager --edit=false --elementor=false
      * 
      * @when after_wp_load
      */
@@ -130,8 +130,8 @@ class RBEC_WP_CLI_Commands {
      * 
      * ## EXAMPLES
      * 
-     *     wp uipress-role-buttons test-user
-     *     wp uipress-role-buttons test-user --user-id=123
+     *     wp rbec test-user
+     *     wp rbec test-user --user-id=123
      * 
      * @when after_wp_load
      */
@@ -176,8 +176,8 @@ class RBEC_WP_CLI_Commands {
      * 
      * ## EXAMPLES
      * 
-     *     wp uipress-role-buttons export config.json
-     *     wp uipress-role-buttons export config.php --format=php
+     *     wp rbec export config.json
+     *     wp rbec export config.php --format=php
      * 
      * @when after_wp_load
      */
@@ -194,7 +194,7 @@ class RBEC_WP_CLI_Commands {
         if ($format === 'php') {
             $content = "<?php\n";
             $content .= "/**\n";
-            $content .= " * Exported UiPress Role Buttons Configuration\n";
+            $content .= " * Exported RBEC Configuration\n";
             $content .= " * Generated: " . date('Y-m-d H:i:s') . "\n";
             $content .= " */\n\n";
             $content .= "\$rbec_role_button_config = " . var_export($rbec_role_button_config, true) . ";\n";
@@ -227,9 +227,9 @@ class RBEC_WP_CLI_Commands {
      * 
      * ## EXAMPLES
      * 
-     *     wp uipress-role-buttons import config.json
-     *     wp uipress-role-buttons import config.php --format=php
-     *     wp uipress-role-buttons import config.json --dry-run
+     *     wp rbec import config.json
+     *     wp rbec import config.php --format=php
+     *     wp rbec import config.json --dry-run
      * 
      * @when after_wp_load
      */
@@ -314,7 +314,7 @@ class RBEC_WP_CLI_Commands {
      * 
      * ## EXAMPLES
      * 
-     *     wp uipress-role-buttons reset --confirm
+     *     wp rbec reset --confirm
      * 
      * @when after_wp_load
      */
@@ -355,8 +355,8 @@ class RBEC_WP_CLI_Commands {
      * 
      * ## EXAMPLES
      * 
-     *     wp uipress-role-buttons bulk-update --roles="editor,author" --edit=false
-     *     wp uipress-role-buttons bulk-update --file=bulk-updates.json
+     *     wp rbec bulk-update --roles="editor,author" --edit=false
+     *     wp rbec bulk-update --file=bulk-updates.json
      * 
      * @when after_wp_load
      */
@@ -485,7 +485,7 @@ class RBEC_WP_CLI_Commands {
         $rbec_role_button_config = $config;
         
         // You could also save to an option or custom table
-        // update_option('uipress_role_button_config', $config);
+        // update_option('rbec_role_button_config', $config);
         
         WP_CLI::log('Configuration saved (note: changes are temporary in this implementation)');
     }
