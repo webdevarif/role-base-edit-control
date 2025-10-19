@@ -200,7 +200,8 @@ add_action('admin_init', 'rbec_init_config_validation');
  * Debug function to display current role configuration
  * Only works if WP_DEBUG is enabled
  */
-function rbec_debug_role_config() {
+if (!function_exists('rbec_debug_role_config')) {
+    function rbec_debug_role_config() {
     if (!defined('WP_DEBUG') || !WP_DEBUG) {
         return;
     }
@@ -214,5 +215,6 @@ function rbec_debug_role_config() {
         $config = rbec_get_role_button_config($role);
         error_log("RBEC Role-Based Edit Control - Role '{$role}': Edit=" . ($config['show_edit'] ? 'Yes' : 'No') . 
                  ", Elementor=" . ($config['show_elementor'] ? 'Yes' : 'No'));
+    }
     }
 }

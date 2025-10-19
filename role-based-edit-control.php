@@ -384,7 +384,7 @@ add_action('admin_bar_menu', 'rbec_add_admin_bar_link', 100);
 /**
  * Debug function - only works if WP_DEBUG is enabled
  */
-if (defined('WP_DEBUG') && WP_DEBUG) {
+if (defined('WP_DEBUG') && WP_DEBUG && !function_exists('rbec_debug_role_config')) {
     function rbec_debug_role_config() {
         if (current_user_can('manage_options')) {
             error_log('RBEC Debug: Plugin loaded successfully');
