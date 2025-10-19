@@ -41,8 +41,8 @@ class RBEC_Button_Manager {
         $this->register_hooks();
         
         // Debug logging if enabled
-        if (defined('WP_DEBUG') && WP_DEBUG && function_exists('rbec_debug_role_config')) {
-            add_action('admin_init', 'rbec_debug_role_config');
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            add_action('admin_init', 'uipress_debug_role_config');
         }
     }
 

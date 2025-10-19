@@ -218,25 +218,3 @@ if (!function_exists('rbec_debug_role_config')) {
     }
     }
 }
-
-/**
- * Backward compatibility functions
- * These maintain compatibility with the old uipress_ function names
- */
-if (!function_exists('uipress_user_can_see_edit_button')) {
-    function uipress_user_can_see_edit_button() {
-        return rbec_user_can_see_edit_button();
-    }
-}
-
-if (!function_exists('uipress_user_can_see_elementor_button')) {
-    function uipress_user_can_see_elementor_button() {
-        return rbec_user_can_see_elementor_button();
-    }
-}
-
-if (!function_exists('uipress_get_role_button_config')) {
-    function uipress_get_role_button_config($role) {
-        return rbec_get_role_button_config($role);
-    }
-}
