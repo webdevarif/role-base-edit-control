@@ -62,10 +62,15 @@
                 var role = $checkbox.data('role');
                 var permission = $checkbox.data('permission');
                 
-                // Update the display text
+                // Update only the display text, not the entire label
                 var $cell = $checkbox.closest('td');
+                var $label = $cell.find('label');
                 var newText = $checkbox.is(':checked') ? '✅ Yes' : '❌ No';
-                $cell.find('label').html($checkbox.prop('outerHTML') + ' ' + newText);
+                
+                // Update only the text part, preserve the checkbox
+                $label.contents().filter(function() {
+                    return this.nodeType === 3; // Text nodes
+                }).last().replaceWith(' ' + newText);
             });
             
             // Save role permissions
@@ -93,8 +98,13 @@
             $(document).on('change', '.user-override-permission', function() {
                 var $checkbox = $(this);
                 var $cell = $checkbox.closest('td');
+                var $label = $cell.find('label');
                 var newText = $checkbox.is(':checked') ? '✅ Yes' : '❌ No';
-                $cell.find('label').html($checkbox.prop('outerHTML') + ' ' + newText);
+                
+                // Update only the text part, preserve the checkbox
+                $label.contents().filter(function() {
+                    return this.nodeType === 3; // Text nodes
+                }).last().replaceWith(' ' + newText);
             });
             
             // Save user override
