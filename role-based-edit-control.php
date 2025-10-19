@@ -75,20 +75,20 @@ class RBEC_Main {
      */
     private function load_dependencies() {
         // Load role configuration
-        require_once RBEC_PLUGIN_DIR_LEGACY . 'includes/role-config.php';
+        require_once RBEC_PLUGIN_DIR_LEGACY . 'includes' . DIRECTORY_SEPARATOR . 'role-config.php';
         
         // Load button manager class
-        require_once RBEC_PLUGIN_DIR_LEGACY . 'includes/class-role-button-manager.php';
+        require_once RBEC_PLUGIN_DIR_LEGACY . 'includes' . DIRECTORY_SEPARATOR . 'class-role-button-manager.php';
         
         // Load simple permissions system
-        require_once RBEC_PLUGIN_DIR_LEGACY . 'includes/class-simple-permissions.php';
+        require_once RBEC_PLUGIN_DIR_LEGACY . 'includes' . DIRECTORY_SEPARATOR . 'class-simple-permissions.php';
         
         // Load admin settings class
-        require_once RBEC_PLUGIN_DIR_LEGACY . 'includes/class-admin-settings.php';
+        require_once RBEC_PLUGIN_DIR_LEGACY . 'includes' . DIRECTORY_SEPARATOR . 'class-admin-settings.php';
         
         // Load WP-CLI commands if WP-CLI is available
         if (defined('WP_CLI') && WP_CLI) {
-            require_once RBEC_PLUGIN_DIR_LEGACY . 'includes/class-wp-cli-commands.php';
+            require_once RBEC_PLUGIN_DIR_LEGACY . 'includes' . DIRECTORY_SEPARATOR . 'class-wp-cli-commands.php';
         }
     }
 
