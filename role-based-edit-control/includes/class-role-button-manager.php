@@ -150,9 +150,7 @@ class RBEC_Button_Manager {
         $elementor_actions = array(
             'elementor',
             'edit_with_elementor',
-            'elementor-preview',
-            'elementor_edit',
-            'elementor-edit'
+            'elementor-preview'
         );
 
         foreach ($elementor_actions as $action) {
@@ -271,41 +269,28 @@ class RBEC_Button_Manager {
         }
 
         ?>
-        <style type="text/css">
-        <?php if (!rbec_user_can_see_elementor_button()): ?>
-        .edit_with_elementor,
-        #elementor-editor-button,
-        #elementor-editor,
-        #elementor-go-to-edit-page-link,
-        .elementor-edit-link,
-        .elementor-edit-page,
-        a[href*="action=elementor"] {
-            display: none !important;
-            pointer-events: none !important;
-        }
-        <?php endif; ?>
-        </style>
-        
         <script type="text/javascript">
         jQuery(document).ready(function($) {
+            // Additional button hiding for elements not caught by PHP hooks
+            
             <?php if (!rbec_user_can_see_edit_button()): ?>
+            // Hide classic edit buttons
             $('.edit-link, .edit a, .post-edit-link, .page-edit-link').hide();
+            <?php endif; ?>
+            
+            <?php if (!rbec_user_can_see_elementor_button()): ?>
+            // Hide Elementor buttons
+            $('.elementor-edit-link, .elementor-edit-page, .elementor-preview-link').hide();
+            $('a[href*="elementor"]').hide();
+            <?php endif; ?>
+            
+            // Hide buttons in admin panels
+            <?php if (!rbec_user_can_see_edit_button()): ?>
             $('.uip-admin-page a[href*="post.php"], .uip-admin-page a[href*="post-new.php"]').hide();
             <?php endif; ?>
             
             <?php if (!rbec_user_can_see_elementor_button()): ?>
-            // Hide in pages/posts table
-            $('.elementor-edit-link, .elementor-edit-page, .elementor-preview-link').hide();
-            $('.edit_with_elementor').hide();
-            $('a[href*="elementor"]').hide();
-            
-            // Hide on post edit page
-            $('#elementor-editor-button').hide();
-            $('#elementor-editor').hide();
-            $('#elementor-go-to-edit-page-link').hide();
             $('.uip-admin-page a[href*="elementor"]').hide();
-            
-            $('body').addClass('rbec-elementor-disabled');
             <?php endif; ?>
         });
         </script>

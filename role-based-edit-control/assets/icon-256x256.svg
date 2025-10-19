@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="256" height="256" fill="#2c3e50" rx="20"/>
+  
+  <!-- Main icon background -->
+  <circle cx="128" cy="128" r="100" fill="#3498db"/>
+  
+  <!-- Shield/Control symbol -->
+  <path d="M128 40 L160 60 L160 120 C160 140 150 160 128 180 C106 160 96 140 96 120 L96 60 Z" fill="white"/>
+  
+  <!-- Lock symbol -->
+  <rect x="118" y="100" width="20" height="25" fill="#3498db" rx="3"/>
+  <rect x="110" y="95" width="36" height="10" fill="#3498db" rx="5"/>
+  
+  <!-- Users symbol -->
+  <circle cx="108" cy="140" r="8" fill="#27ae60"/>
+  <circle cx="148" cy="140" r="8" fill="#27ae60"/>
+  <circle cx="128" cy="160" r="10" fill="#e74c3c"/>
+  
+  <!-- Permission lines -->
+  <line x1="80" y1="200" x2="176" y2="200" stroke="#ecf0f1" stroke-width="3" stroke-linecap="round"/>
+  <line x1="90" y1="210" x2="166" y2="210" stroke="#ecf0f1" stroke-width="2" stroke-linecap="round"/>
+  <line x1="100" y1="220" x2="156" y2="220" stroke="#ecf0f1" stroke-width="2" stroke-linecap="round"/>
+</svg>

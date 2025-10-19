@@ -92,11 +92,11 @@ function rbec_get_role_button_config($role) {
         return $rbec_role_button_config[$role];
     }
     
-    // Default configuration for unknown roles (fail-safe approach)
+    // Default configuration for unknown roles (conservative approach)
     return array(
-        'show_edit' => true,
-        'show_elementor' => true,
-        'description' => 'Unknown role - defaulting to full access'
+        'show_edit' => false,
+        'show_elementor' => false,
+        'description' => 'Unknown role - defaulting to view-only access'
     );
 }
 

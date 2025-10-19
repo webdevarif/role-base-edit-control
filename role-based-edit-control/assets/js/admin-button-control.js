@@ -40,11 +40,7 @@
                     '.elementor-edit-page',
                     '.elementor-preview-link',
                     'a[href*="elementor"]',
-                    'a[href*="action=elementor"]',
-                    '#elementor-editor-button',
-                    '#elementor-editor',
-                    '#elementor-go-to-edit-page-link',
-                    '.edit_with_elementor'
+                    'a[href*="action=elementor"]'
                 ],
                 rbecPanels: [
                     '.uip-admin-page',
