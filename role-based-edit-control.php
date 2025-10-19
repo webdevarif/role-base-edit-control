@@ -75,20 +75,64 @@ class RBEC_Main {
      */
     private function load_dependencies() {
         // Load role configuration
-        require_once RBEC_PLUGIN_DIR_LEGACY . 'includes' . DIRECTORY_SEPARATOR . 'role-config.php';
+        $role_config_file = RBEC_PLUGIN_DIR_LEGACY . 'includes' . DIRECTORY_SEPARATOR . 'role-config.php';
+        if (file_exists($role_config_file)) {
+            require_once $role_config_file;
+        } else {
+            error_log('RBEC: role-config.php not found at: ' . $role_config_file);
+        }
         
         // Load button manager class
-        require_once RBEC_PLUGIN_DIR_LEGACY . 'includes' . DIRECTORY_SEPARATOR . 'class-role-button-manager.php';
+        $button_manager_file = RBEC_PLUGIN_DIR_LEGACY . 'includes' . DIRECTORY_SEPARATOR . 'class-role-button-manager.php';
+        if (file_exists($button_manager_file)) {
+            require_once $button_manager_file;
+        } else {
+            error_log('RBEC: class-role-button-manager.php not found at: ' . $button_manager_file);
+        }
         
         // Load simple permissions system
-        require_once RBEC_PLUGIN_DIR_LEGACY . 'includes' . DIRECTORY_SEPARATOR . 'class-simple-permissions.php';
+        $permissions_file = RBEC_PLUGIN_DIR_LEGACY . 'includes' . DIRECTORY_SEPARATOR . 'class-simple-permissions.php';
+        if (file_exists($permissions_file)) {
+            require_once $permissions_file;
+        } else {
+            error_log('RBEC: including permissions inline');
+            // Include permissions inline if file doesn't exist
+            $this->include_permissions_inline();
+        }
         
         // Load admin settings class
-        require_once RBEC_PLUGIN_DIR_LEGACY . 'includes' . DIRECTORY_SEPARATOR . 'class-admin-settings.php';
+        $admin_settings_file = RBEC_PLUGIN_DIR_LEGACY . 'includes' . DIRECTORY_SEPARATOR . 'class-admin-settings.php';
+        if (file_exists($admin_settings_file)) {
+            require_once $admin_settings_file;
+        } else {
+            error_log('RBEC: class-admin-settings.php not found at: ' . $admin_settings_file);
+        }
         
         // Load WP-CLI commands if WP-CLI is available
         if (defined('WP_CLI') && WP_CLI) {
-            require_once RBEC_PLUGIN_DIR_LEGACY . 'includes' . DIRECTORY_SEPARATOR . 'class-wp-cli-commands.php';
+            $wp_cli_file = RBEC_PLUGIN_DIR_LEGACY . 'includes' . DIRECTORY_SEPARATOR . 'class-wp-cli-commands.php';
+            if (file_exists($wp_cli_file)) {
+                require_once $wp_cli_file;
+            } else {
+                error_log('RBEC: class-wp-cli-commands.php not found at: ' . $wp_cli_file);
+            }
+        }
+    }
+
+    /**
+     * Include permissions inline as fallback
+     */
+    private function include_permissions_inline() {
+        // Basic permissions fallback - define essential functions inline
+        if (!function_exists('rbec_user_can_see_edit_button')) {
+            function rbec_user_can_see_edit_button() {
+                return true; // Default to true if config not available
+            }
+        }
+        if (!function_exists('rbec_user_can_see_elementor_button')) {
+            function rbec_user_can_see_elementor_button() {
+                return true; // Default to true if config not available
+            }
         }
     }
 
@@ -96,8 +140,21 @@ class RBEC_Main {
      * Initialize plugin components
      */
     private function init_components() {
-        $this->button_manager = new RBEC_Button_Manager();
-        $this->admin_settings = new RBEC_Admin_Settings();
+        try {
+            if (class_exists('RBEC_Button_Manager')) {
+                $this->button_manager = new RBEC_Button_Manager();
+            } else {
+                error_log('RBEC: RBEC_Button_Manager class not found');
+            }
+            
+            if (class_exists('RBEC_Admin_Settings')) {
+                $this->admin_settings = new RBEC_Admin_Settings();
+            } else {
+                error_log('RBEC: RBEC_Admin_Settings class not found');
+            }
+        } catch (Exception $e) {
+            error_log('RBEC: Error initializing components: ' . $e->getMessage());
+        }
     }
 
     /**
