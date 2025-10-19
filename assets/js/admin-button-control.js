@@ -279,7 +279,7 @@
     /**
      * Handle Admin dashboard events
      */
-    $(document).on('uipress:panel:loaded', function() {
+    $(document).on('admin:panel:loaded', function() {
         RBECRoleButtonController.handleAdminPanels();
     });
 
